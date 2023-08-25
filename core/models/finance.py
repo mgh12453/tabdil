@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.log import logging
 from django.db.models import Sum, F
-from django.db.models.functions import Coalesce
 from django.db import transaction
 from django.core.exceptions import ValidationError
 from .seller import Seller
@@ -26,12 +25,10 @@ class Purchase(models.Model):
         return f'{self.amount} - {self.seller.user.username}'
 
     def clean(self):
-        total_balance = Purchase.objects.filter(seller=self.seller).aggregate(total_balance=Coalesce(Sum('amount'), 0))[
-            'total_balance']
-        new_balance = total_balance + self.amount
+        new_balance = self.seller.balance + self.amount
 
-        if total_balance != self.seller.balance:
-            raise ValidationError(f'Balance is not equal to total balance {self.seller.balance} != {total_balance}')
+        if self.seller.has_conflict:
+            raise ValidationError(f'can not save purchase with conflicts: {self.seller} with balance {self.seller.balance}')
 
         if new_balance < 0:
             raise ValidationError(f'Seller balance is not enough {new_balance} < 0')
