@@ -23,7 +23,7 @@ class AddBalanceView(APIView):
 
         with transaction.atomic():
             try:
-                Purchase.objects.create(seller=seller, amount=amount).save()
+                Purchase.objects.create(seller=seller, amount=amount, type='ISB').save()
             except Exception as e:
                 logger.error(f'error in saving purchase {e}')
                 return Response({'error': 'error in saving purchase'}, status=400)

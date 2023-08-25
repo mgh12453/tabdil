@@ -25,7 +25,7 @@ class Charge(models.Model):
                 return super().save(*args, **kwargs)
 
             self.full_clean()
-            self.purchase = Purchase.objects.create(seller=self.seller, amount=-self.amount)
+            self.purchase = Purchase.objects.create(seller=self.seller, amount=-self.amount, type='DBC')
             self.purchase.save()
             return super().save(*args, **kwargs)
         except Exception as e:

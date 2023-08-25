@@ -8,6 +8,12 @@ from .seller import Seller
 logger = logging.getLogger(__name__)
 app_name = 'core'
 
+PURCHASE_TYPE_CHOICES = (
+    ('U', 'Unknown'),
+    ('ISB', 'Increase Seller Balance'),
+    ('DBC', 'Decrease Balance for Charge')
+)
+
 
 # This model is used to store the purchases of the sellers. all the financial logic is implemented here
 class Purchase(models.Model):
@@ -16,6 +22,7 @@ class Purchase(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    type = models.CharField(max_length=3, choices=PURCHASE_TYPE_CHOICES, default='U')
     extra = models.JSONField(null=True, blank=True)
 
     class Meta:
