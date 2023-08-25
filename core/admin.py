@@ -1,3 +1,6 @@
 from django.contrib import admin
+from core.models import Seller, Charge, Purchase
 
-# Register your models here.
+admin.site.register(Seller)
+admin.site.register(Charge)
+admin.site.register(Purchase)

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -106,9 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 20,
     'DEFAULT_THROTTLE_CLASSES': [
@@ -117,16 +115,6 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'group_purchase': '5/day',
     },
-    'DEFAULT_RENDERER_CLASSES': (
-        'renderers.CamelCaseRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ),
-    'DEFAULT_PARSER_CLASSES': (
-        'parsers.SnakeCaseParser',
-        'rest_framework.parsers.FormParser',
-        'rest_framework.parsers.MultiPartParser',
-        'rest_framework.parsers.FileUploadParser',
-    ),
 }
 
 
